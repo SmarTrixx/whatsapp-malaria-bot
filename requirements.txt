@@ -1,0 +1,11 @@
+flask
+transformers
+torch
+datasets
+accelerate
+pydub
+soundfile
+APScheduler
+python-dotenv
+requests
+pyngrok
