@@ -1,0 +1,9 @@
+💡 Total Monthly Estimate (50 Users)
+Category	Cost Estimate
+Twilio Messaging	$6.30 / month
+Twilio Number	$1.00 / month
+Hosting (Railway)	$0.00 (Free Tier)
+Domain + Site (avg.)	~$2.50 / month
+
+✅ Monthly Total: ~$10 – $12
+(With optional hosting upgrade: ~$15 – $17/month)

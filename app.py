@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from pyngrok import ngrok
 import soundfile as sf
 from flask import request
+import pytz
 
 # Load environment variables
 load_dotenv()
@@ -109,9 +110,13 @@ def broadcast():
 
 # Schedule job: 9 AM daily
 sched = BackgroundScheduler()
-sched.timezone = "Africa/Lagos"
-sched.add_job(broadcast, "cron", hour=9, minute=0)
-# sched.add_job(broadcast, "interval", minutes=2)
+sched.timezone = pytz.timezone("Africa/Lagos")
+
+if TESTING_MODE:
+    sched.add_job(broadcast, "interval", minutes=1)
+else:
+    sched.add_job(broadcast, "cron", hour=9, minute=0)
+
 sched.start()
 
 # Serve audio files
