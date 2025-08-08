@@ -223,7 +223,7 @@ from pytz import timezone
 sched = BackgroundScheduler(timezone=timezone("Africa/Lagos"))
 if TESTING_MODE:
     # In test mode, broadcast every 10 minutes (adjust as needed)
-    sched.add_job(broadcast, "interval", minutes=10)
+    sched.add_job(broadcast, "interval", minutes=15)
 else:
     # In production, broadcast daily at 9am
     sched.add_job(broadcast, "cron", hour=9, minute=0)
@@ -304,5 +304,5 @@ if __name__ == "__main__":
             tunnel = ngrok.connect(5000, "http")
             os.environ["PUBLIC_URL"] = tunnel.public_url
             print(f"ngrok tunnel started: {tunnel.public_url}")
-            broadcast()  # Trigger first message on start
+            # broadcast()  # Trigger first message on start
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
