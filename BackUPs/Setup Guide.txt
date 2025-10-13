@@ -1,0 +1,75 @@
+Malaria-PHIS AI Agent - Setup Guide
+===================================
+
+This guide will help you set up the Malaria-PHIS AI Agent on your local machine.
+
+Prerequisites
+-------------
+- Python 3.8 or higher
+- Git
+- pip (Python package manager)
+- (Optional) Virtual environment tool (venv or conda)
+
+Step 1: Clone the Repository
+----------------------------
+Open your terminal and run:
+    git clone https://github.com/<your-org>/malaria-phis-ai-agent.git
+    cd malaria-phis-ai-agent
+
+Step 2: Set Up Virtual Environment (Recommended)
+------------------------------------------------
+Create and activate a virtual environment:
+    python3 -m venv venv
+    source venv/bin/activate   # On Windows: venv\Scripts\activate
+
+Step 3: Install Dependencies
+----------------------------
+Install required Python packages:
+    pip install -r requirements.txt
+
+Step 4: Configure Environment Variables
+---------------------------------------
+Create a `.env` file in the project root. Example:
+    MALARIA_PHIS_API_KEY=your_api_key_here
+    DATABASE_URL=sqlite:///malaria_phis.db
+    # Add other required variables as per README or documentation
+
+Step 5: Initialize the Database
+-------------------------------
+If using SQLite:
+    python scripts/init_db.py
+
+For other databases, refer to the documentation.
+
+Step 6: Download Model Weights (if required)
+--------------------------------------------
+Some AI models may require pre-trained weights. Download them as instructed in the README and place them in the `models/` directory.
+
+Step 7: Run the AI Agent
+------------------------
+Start the agent:
+    python main.py
+
+Step 8: Test the Setup
+----------------------
+Run basic tests to verify installation:
+    python -m unittest discover tests
+
+Step 9: Access the Agent
+------------------------
+- If the agent provides a web interface, open http://localhost:8000 in your browser.
+- For CLI or API usage, refer to the usage section in the README.
+
+Troubleshooting
+---------------
+- Ensure all dependencies are installed.
+- Check `.env` configuration.
+- Review logs for errors.
+
+Further Documentation
+---------------------
+- See README.md for advanced configuration and usage.
+- For support, open an issue on GitHub.
+
+---
+Malaria-PHIS AI Agent © 2024

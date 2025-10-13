@@ -15,9 +15,11 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from twilio.rest import Client
 from pytz import timezone
 
+
+
 # === CONFIGURATION ===
 load_dotenv()
-timeinterval = 7  # minutes for testing, change to 60 for production
+timeinterval = 7  # broadcast interval in minutes. Set to 7 for testing, 1440 for daily.
 TESTING_MODE = True
 if TESTING_MODE:
     from pyngrok import ngrok
@@ -58,7 +60,7 @@ def get_active_subscribers():
     return [p for p, info in data.items() if not info.get("unsubscribed")]
 
 # === AGENTS ===
-class TranslationAgent:
+class TranslationAgent:         # Hausa translation using NLLB-200
     def __init__(self):
         print("[INFO] Loading translation model...")
         self.tokenizer = AutoTokenizer.from_pretrained("facebook/nllb-200-distilled-600M")
@@ -70,7 +72,7 @@ class TranslationAgent:
         out = self.model.generate(**inputs, forced_bos_token_id=self.hausa_token_id)
         return self.tokenizer.decode(out[0], skip_special_tokens=True)
 
-class TTSAgent:
+class TTSAgent:             # Text-to-Speech using Facebook's MMS-TTS-Hausa
     def __init__(self):
         print("[INFO] Loading TTS model...")
         self.tokenizer = AutoTokenizer.from_pretrained("facebook/mms-tts-hau")
@@ -87,7 +89,7 @@ class TTSAgent:
         os.remove(wav_path)
         return os.path.basename(mp3_path)
 
-class DeliveryAgent:
+class DeliveryAgent:            # Whatsapp delivery using Twilio
     def __init__(self, sid, token, from_number):
         self.client = Client(sid, token)
         self.from_number = from_number
@@ -116,7 +118,7 @@ class DeliveryAgent:
 
 # === PUBLIC URL HANDLER ===
 def update_public_url():
-    if TESTING_MODE:
+    if TESTING_MODE:            # Uses Ngrok for Local Testing
         tunnels = ngrok.get_tunnels()
         for t in tunnels:
             if t.public_url.startswith("https://"):
@@ -168,9 +170,9 @@ delivery_agent = DeliveryAgent(
 # === SCHEDULER ===
 sched = BackgroundScheduler(timezone=timezone("Africa/Lagos"))
 if TESTING_MODE:
-    sched.add_job(broadcast, trigger="interval", minutes=timeinterval)
+    sched.add_job(broadcast, trigger="interval", minutes=timeinterval)      
 else:
-    sched.add_job(broadcast, trigger="cron", hour=9, minute=0)
+    sched.add_job(broadcast, trigger="cron", hour=9, minute=0)      
 sched.start()
 
 # === FLASK APP ===

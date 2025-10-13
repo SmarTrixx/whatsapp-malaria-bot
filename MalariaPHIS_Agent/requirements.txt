@@ -1,0 +1,14 @@
+#list of required packages
+#flask,python-dotenv,pydub,pandas,torch,transformers,soundfile,apscheduler,twilio,pytz,pyngrok
+
+flask
+python-dotenv
+pydub
+pandas
+torch
+transformers
+soundfile
+apscheduler
+twilio
+pytz
+pyngrok
